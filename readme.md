@@ -11,3 +11,9 @@
 1. /owners/find 의 검색을 lastName - firstName으로 변경
 2. 검색 시 WildCard를 앞 뒤로 두기 (ex. leegicheol을 검색 시 gi 만 검색해도 나올 수 있도록)
 3. h2 데이터베이스에 age 컬럼 추가. thymeleaf에도 적용
+4. Inversion Of Control, Dependency Injection
+    1) IoC의 개념
+    2) DI를 받는 방법 3가지
+        1) Field에 Autowired Annotation
+        2) 생성자로 주입
+        3) Setter를 통해 주입

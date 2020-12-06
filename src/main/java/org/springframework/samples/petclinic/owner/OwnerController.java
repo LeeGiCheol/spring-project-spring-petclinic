@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.visit.VisitRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +50,32 @@ class OwnerController {
 		this.owners = clinicService;
 		this.visits = visits;
 	}
+
+	/*
+		의존성 주입 3가지 방법
+		Field , Constructor, Setter
+
+		1. Field
+		@Autowired
+		private PetRepository petRepository;
+
+
+		2. Constructor
+		private PetRepository petRepository;
+
+		public OwnerController(OwnerRepository clinicService, VisitRepository visits, PetRepository petRepository) {
+			this.owners = clinicService;
+			this.visits = visits;
+			this.petRepository = petRepository;
+
+		3. Setter
+		private PetRepository petRepository;
+
+		public void setPetRepository(PetRepository petRepository) {
+			this.petRepository = petRepository;
+		}
+	 */
+
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
