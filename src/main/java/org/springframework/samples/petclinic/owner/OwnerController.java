@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.visit.VisitRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StopWatch;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,30 +53,24 @@ class OwnerController {
 	}
 
 	/*
-		의존성 주입 3가지 방법
-		Field , Constructor, Setter
-
-		1. Field
-		@Autowired
-		private PetRepository petRepository;
-
-
-		2. Constructor
-		private PetRepository petRepository;
-
-		public OwnerController(OwnerRepository clinicService, VisitRepository visits, PetRepository petRepository) {
-			this.owners = clinicService;
-			this.visits = visits;
-			this.petRepository = petRepository;
-
-		3. Setter
-		private PetRepository petRepository;
-
-		public void setPetRepository(PetRepository petRepository) {
-			this.petRepository = petRepository;
-		}
+	 * 의존성 주입 3가지 방법 Field , Constructor, Setter
+	 *
+	 * 1. Field
+	 *
+	 * @Autowired private PetRepository petRepository;
+	 *
+	 *
+	 * 2. Constructor private PetRepository petRepository;
+	 *
+	 * public OwnerController(OwnerRepository clinicService, VisitRepository visits,
+	 * PetRepository petRepository) { this.owners = clinicService; this.visits = visits;
+	 * this.petRepository = petRepository;
+	 *
+	 * 3. Setter private PetRepository petRepository;
+	 *
+	 * public void setPetRepository(PetRepository petRepository) { this.petRepository =
+	 * petRepository; }
 	 */
-
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
@@ -83,13 +78,16 @@ class OwnerController {
 	}
 
 	@GetMapping("/owners/new")
+	@LogExecutionTime
 	public String initCreationForm(Map<String, Object> model) {
 		Owner owner = new Owner();
 		model.put("owner", owner);
+
 		return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping("/owners/new")
+	@LogExecutionTime
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
@@ -101,12 +99,14 @@ class OwnerController {
 	}
 
 	@GetMapping("/owners/find")
+	@LogExecutionTime
 	public String initFindForm(Map<String, Object> model) {
 		model.put("owner", new Owner());
 		return "owners/findOwners";
 	}
 
 	@GetMapping("/owners")
+	@LogExecutionTime
 	public String processFindForm(Owner owner, BindingResult result, Map<String, Object> model) {
 
 		// allow parameterless GET request for /owners to return all records
